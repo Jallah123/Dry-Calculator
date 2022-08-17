@@ -31,7 +31,7 @@ public class DryCalculatorService
 		if (input.getAmountOfDrops() == 0)
 		{
 			final BigDecimal dryness = toPercentage(BigDecimal.ONE.subtract(input.getChance()).pow(input.getKc()));
-			return new DrynessResult(String.format("With %s kc you had a\n%s%% chance of no drops\n%s%% chance of at least 1\nU rn", input.getKc(), dryness, ONE_HUNDRED.subtract(dryness)), getDrynessImage(dryness.doubleValue()));
+			return new DrynessResult(String.format("With %s kc you had a\n%s%% chance of no drops\n%s%% chance of at least 1\nU rn", input.getKc(), dryness, ONE_HUNDRED.subtract(dryness)), getDrynessImage(dryness.doubleValue(), input.getAmountOfDrops()));
 		}
 		else
 		{
@@ -45,12 +45,28 @@ public class DryCalculatorService
 			BigDecimal dryness3 = toPercentage(BigDecimal.ONE.subtract(dryness2).add(dryness));
 			dryness2 = toPercentage(dryness2);
 			dryness = toPercentage(dryness);
-			return new DrynessResult(String.format("With %s kc you had a\n%s%% chance for exactly %s\n%s%% chance for %s or fewer\n%s%% chance for more\nU rn", input.getKc(), dryness, input.getAmountOfDrops(), dryness2, input.getAmountOfDrops(), dryness3), getDrynessImage(dryness.doubleValue()));
+			final Image drynessImage;
+			if (input.getAmountOfDrops() >= 1)
+			{
+				drynessImage = getDrynessImage(dryness2.doubleValue(), input.getAmountOfDrops());
+			}
+			else
+			{
+				drynessImage = getDrynessImage(dryness.doubleValue(), input.getAmountOfDrops());
+			}
+			return new DrynessResult(String.format("With %s kc you had a\n%s%% chance for exactly %s\n%s%% chance for %s or fewer\n%s%% chance for more\nU rn", input.getKc(), dryness, input.getAmountOfDrops(), dryness2, input.getAmountOfDrops(), dryness3), drynessImage);
 		}
 	}
 
-	private static Image getDrynessImage(double dryness)
+	private static Image getDrynessImage(double dryness, int drops)
 	{
+		if (drops == 0)
+		{
+			if (dryness > 50)
+			{
+				return NOTHING;
+			}
+		}
 		if (dryness <= 5)
 		{
 			return SKELETON;

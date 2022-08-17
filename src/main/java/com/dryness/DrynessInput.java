@@ -1,6 +1,7 @@
 package com.dryness;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 
 public class DrynessInput
 {
@@ -19,7 +20,7 @@ public class DrynessInput
 		BigDecimal second = BigDecimal.valueOf(Long.parseLong(dropRateString.split("/")[1]));
 		try
 		{
-			this.chance = first.divide(second);
+			this.chance = first.divide(second, MathContext.DECIMAL128);
 		}
 		catch (ArithmeticException e)
 		{
@@ -49,6 +50,10 @@ public class DrynessInput
 		if (kc == 0)
 		{
 			throw new RuntimeException("Go get some kills!");
+		}
+		if (kc > 100000)
+		{
+			throw new RuntimeException("KC should be lower than 100.000");
 		}
 		if (chance.intValue() >= 1)
 		{
