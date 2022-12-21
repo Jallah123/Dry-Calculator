@@ -54,7 +54,7 @@ public class DryCalculatorService
 			{
 				drynessImage = getDrynessImage(dryness.doubleValue(), input.getAmountOfDrops());
 			}
-			return new DrynessResult(String.format("With %s kc you had a\n%s%% chance for exactly %s\n%s%% chance for %s or fewer\n%s%% chance for more\nU rn", input.getKc(), dryness, input.getAmountOfDrops(), dryness2, input.getAmountOfDrops(), dryness3), drynessImage);
+			return new DrynessResult(String.format("With %s kc you had a\n%s%% chance for exactly %s\n%s%% chance for %s or fewer\n%s%% chance for %s or more\nU rn", input.getKc(), dryness, input.getAmountOfDrops(), dryness2, input.getAmountOfDrops(), dryness3, input.getAmountOfDrops()), drynessImage);
 		}
 	}
 

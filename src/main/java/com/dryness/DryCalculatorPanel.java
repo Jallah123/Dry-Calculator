@@ -51,6 +51,7 @@ public class DryCalculatorPanel extends PluginPanel
 	DryCalculatorPanel()
 	{
 		result.setLineWrap(true);
+		result.setEditable(false);
 		JButton calculate = new JButton();
 		calculate.setText("Calculate");
 		calculate.addActionListener(this::handleClick);
