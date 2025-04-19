@@ -42,7 +42,7 @@ public class DryCalculatorService
 			{
 				dryness2 = dryness2.add(BigDecimal.valueOf(choose(input.getKc(), i)).multiply(input.getChance().pow(i)).multiply(BigDecimal.ONE.subtract(input.getChance()).pow(input.getKc() - i)));
 			}
-			BigDecimal dryness3 = toPercentage(BigDecimal.ONE.subtract(dryness2).add(dryness));
+			BigDecimal dryness3 = toPercentage(BigDecimal.ONE.subtract(dryness2.subtract(dryness)));
 			dryness2 = toPercentage(dryness2);
 			dryness = toPercentage(dryness);
 			final Image drynessImage;
